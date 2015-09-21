@@ -18,16 +18,6 @@ source = "out.h264",  source_duration = 58, width = 960, height = 540;
 
 var sourceThrottleRate = fileSizeSync(source) / source_duration;
 
-var readStream = fs.createReadStream(source);
-  
-
-  //throttle for real time simulation
-readStream = readStream.pipe(new Throttle({rate: sourceThrottleRate}));
-
-  var separator = new Buffer([0,0,0,1]);//NAL break
-readStream = readStream.pipe(new Splitter(separator));
-
-readStream.pause();
 
 var server = require('http').createServer(app);
 
@@ -39,6 +29,21 @@ var wss = new WebSocketServer({server: server});
 var sent = 0;
 
 wss.on('connection', function(socket){
+
+
+  console.log('New guy');
+
+  var readStream = fs.createReadStream(source);
+
+    //throttle for real time simulation
+  readStream = readStream.pipe(new Throttle({rate: sourceThrottleRate}));
+
+    var separator = new Buffer([0,0,0,1]);//NAL break
+  readStream = readStream.pipe(new Splitter(separator));
+
+  readStream.pause();
+
+
   socket.send(JSON.stringify({action : "init", width: width, height : height}));
 
   socket.on("message", function(data){
@@ -47,12 +52,8 @@ wss.on('connection', function(socket){
       readStream.resume();
     if(action == "STOPSTREAM")
       readStream.pause();
-
     console.log("Incomming data", data);
-
   });
-
-
 
 
   readStream.on('data', function(data) {
@@ -75,10 +76,8 @@ wss.on('connection', function(socket){
 
   });
 
-  console.log('New guy');
-
-
   socket.on('close', function() {
+    readStream.end();
     console.log('stopping client interval');
 
   });

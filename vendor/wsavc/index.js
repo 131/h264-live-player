@@ -1,6 +1,6 @@
 "use strict";
 
-var Avc            = require('../avc');
+var Avc            = require('../broadway/Decoder');
 var YUVWebGLCanvas = require('../canvas/YUVWebGLCanvas');
 
 
@@ -10,7 +10,7 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
   this.delay = delay;
   // AVC codec initialization
   this.avc = new Avc();
-  this.avc.configure({
+  if(false) this.avc.configure({
     filter: "original",
     filterHorLuma: "optimized",
     filterVerLumaEdge: "optimized",
