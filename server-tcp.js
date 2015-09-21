@@ -1,22 +1,17 @@
 var express = require('express');
 var app     = express();
 var fs      = require('fs');
+var net     = require('net');
 var cp      = require('child_process');
-var Throttle = require('stream-throttle').Throttle;
+
+
 var fileSizeSync = require('nyks/fs/fileSizeSync');
 var Splitter     = require('stream-split');
 
 
 
+var ip = "172.19.21.140", port = 5001, width = 960, height = 540;
 
-
-var source = "samples/movieSample.h264", source_duration = 58, width = 1280, height = 738;
-
-
-source = "samples/admiral.264", source_duration = 58, width = 480, height = 270;
-source = "samples/out.h264",  source_duration = 58, width = 960, height = 540;
-
-var sourceThrottleRate = fileSizeSync(source) / source_duration;
 
 
 var server = require('http').createServer(app);
@@ -29,31 +24,17 @@ var wss = new WebSocketServer({server: server});
 var sent = 0;
 
 wss.on('connection', function(socket){
-
-
-  console.log('New guy');
-
-  var readStream = fs.createReadStream(source);
-
-    //throttle for real time simulation
-  readStream = readStream.pipe(new Throttle({rate: sourceThrottleRate}));
-
-    var separator = new Buffer([0,0,0,1]);//NAL break
-  readStream = readStream.pipe(new Splitter(separator));
-
-  readStream.pause();
-
-
   socket.send(JSON.stringify({action : "init", width: width, height : height}));
 
-  socket.on("message", function(data){
-    var cmd = "" + data, action = data.split(' ')[0];
-    if(action == "REQUESTSTREAM")
-      readStream.resume();
-    if(action == "STOPSTREAM")
-      readStream.pause();
-    console.log("Incomming data", data);
+
+  var readStream = net.connect(port, ip, function(){
+    console.log("remote stream ready");
   });
+
+
+  var separator = new Buffer([0,0,0,1]);
+  readStream = readStream.pipe(new Splitter(separator));
+
 
 
   readStream.on('data', function(data) {
@@ -76,8 +57,10 @@ wss.on('connection', function(socket){
 
   });
 
+  console.log('New guy');
+
+
   socket.on('close', function() {
-    readStream.end();
     console.log('stopping client interval');
 
   });
