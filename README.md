@@ -5,5 +5,5 @@ h264 NAL units are chunked from a sourceFile using [stream-split](https://www.np
 
 
 # Credits
-* [https://github.com/urbenlegend/WebStreamer](urbenlegend/WebStreamer)
-
+* [mbebenita/Broadway](https://github.com/mbebenita/Broadway)
+* [urbenlegend/WebStreamer](https://github.com/urbenlegend/WebStreamer)
