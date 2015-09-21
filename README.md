@@ -7,11 +7,11 @@ NAL unit (h264 frames) are split on the server side, so the client side is very 
 
 
 # History
-* I'm searching for a real-time  camera video feedback (no audio/surveillance cam) in the browser.
+* I was targetting a real-time  camera video feedback (no audio/surveillance cam) in the browser
 * There is no solution for "real time"  mp4 video creation / playback (ffmpeg, mp4box.js, mp4parser - _boxing_ _takes_ _time_)
 * Media Source Extension is a dead end (mp4 boxing is far too hard to re-create on the client side)
 * [Broadway](https://github.com/mbebenita/Broadway) provide the crazy emscripten/asm build of a h264 encoder accelerated by webGL canvas
-
+* Here is all the glue we need, enjoy ;-)
 
 
 # Installation/demo
@@ -19,13 +19,22 @@ NAL unit (h264 frames) are split on the server side, so the client side is very 
 npm install
 grunt pack
 
-# edit server.js to your needs, check server-tcp.js for relaying a rpi
+# edit server.js to your needs, check server-tcp.js for relaying a rpi video
 node .
 # browse to http://127.0.0.1:8080/ for a demo player
 
 ```
 
+# Recommandation
+* Broadway h264 Decoder can only work with baseline profile
+
 
 # Credits
+* [Francois Leurent](131.js@cloudyks.org)
 * [Broadway](https://github.com/mbebenita/Broadway)
 * [urbenlegend/WebStreamer](https://github.com/urbenlegend/WebStreamer)
+
+
+
+# Keywords / shout box
+raspberry, mp4box, h264, nal, raspivid, media source extension, iso, raspicam, bitrate
