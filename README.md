@@ -27,14 +27,17 @@ node .
 
 # Recommandation
 * Broadway h264 Decoder can only work with baseline profile
+* Browserify FTW
 
 
 # Credits
-* [Francois Leurent](131.js@cloudyks.org)
+* [131](mailto:131.js@cloudyks.org)
 * [Broadway](https://github.com/mbebenita/Broadway)
 * [urbenlegend/WebStreamer](https://github.com/urbenlegend/WebStreamer)
 
 
-
 # Keywords / shout box
-raspberry, mp4box, h264, nal, raspivid, media source extension, iso, raspicam, bitrate
+raspberry, mp4box, h264, nal, raspivid, mse, media source extension, iso, raspicam, bitrate, realtime, video, mp4, ffmpeg, "Let's have a beer and talk in Paris"
+
+
+
