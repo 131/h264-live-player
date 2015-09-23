@@ -1,4 +1,4 @@
-var WSAvcPlayer = require('../vendor/wsavc');
+var WSAvcPlayer = require('../vendor');
 
 
 var canvas = document.createElement("canvas");
