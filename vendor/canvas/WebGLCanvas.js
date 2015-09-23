@@ -9,7 +9,8 @@
 
 var Script = require('./Script');
 var error  = require('../utils/error');
-
+var makePerspective  = require('../utils/glUtils').makePerspective;
+var Matrix = require('sylvester.js').Matrix;
   
 var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", [
   "attribute vec3 aVertexPosition;",
