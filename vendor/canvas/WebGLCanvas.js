@@ -4,19 +4,14 @@
  * Generic WebGL backed canvas that sets up: a quad to paint a texture on, appropriate vertex/fragment shaders,
  * scene parameters and other things. Specialized versions of this class can be created by overriding several 
  * initialization methods.
- * 
- * <code>
- * var canvas = new WebGLCanvas(document.getElementById('canvas'), new Size(512, 512);
- * canvas.texture.fill(data);
- * canvas.drawScene();
- * </code>
+
  */
 
 var Script = require('./Script');
-
+var error  = require('../utils/error');
 
   
-var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
+var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", [
   "attribute vec3 aVertexPosition;",
   "attribute vec2 aTextureCoord;",
   "uniform mat4 uMVMatrix;",
@@ -26,16 +21,16 @@ var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
   "  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);",
   "  vTextureCoord = aTextureCoord;",
   "}"
-  ]));
+  ].join("\n"));
 
-var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", text([
+var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", [
   "precision highp float;",
   "varying highp vec2 vTextureCoord;",
   "uniform sampler2D texture;",
   "void main(void) {",
   "  gl_FragColor = texture2D(texture, vTextureCoord);",
   "}"
-  ]));
+  ].join("\n"));
 
 function WebGLCanvas(canvas, size, useFrameBuffer) {
   this.canvas = canvas;

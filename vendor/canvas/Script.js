@@ -1,5 +1,7 @@
 "use strict";
 
+var assert = require('../utils/assert');
+
 /**
  * Represents a WebGL shader script.
  */

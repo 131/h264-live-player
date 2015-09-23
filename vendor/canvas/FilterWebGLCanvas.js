@@ -1,6 +1,8 @@
 "use strict";
 
-var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
+var inherit = require('../utils/inherit');
+
+var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", [
   "attribute vec3 aVertexPosition;",
   "attribute vec2 aTextureCoord;",
   "uniform mat4 uMVMatrix;",
@@ -10,9 +12,9 @@ var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
   "  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);",
   "  vTextureCoord = aTextureCoord;",
   "}"
-]));
+].join("\n"));
 
-var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", text([
+var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", [
   "precision highp float;",
   "varying highp vec2 vTextureCoord;",
   "uniform sampler2D FTexture;",
@@ -20,7 +22,7 @@ var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", text([
   "void main(void) {",
   " gl_FragColor = texture2D(FTexture,  vTextureCoord);",
   "}"
-]));
+].join("\n"));
 
 
 function FilterWebGLCanvas(canvas, size, useFrameBuffer) {

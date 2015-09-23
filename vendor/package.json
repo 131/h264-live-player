@@ -1,6 +1,6 @@
 {
   "name": "h264-live-player",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "wsavc/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,5 +1,7 @@
 "use strict";
 
+var error = require('../utils/error');
+
 /**
  * Represents a WebGL shader object and provides a mechanism to load shaders from HTML
  * script tags.

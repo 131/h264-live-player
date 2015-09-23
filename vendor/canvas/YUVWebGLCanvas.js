@@ -5,9 +5,9 @@ var Shader      = require('./Shader');
 var Texture     = require('./Texture');
 var Script      = require('./Script');
 var WebGLCanvas = require('./WebGLCanvas');
+var inherit     = require('../utils/inherit');
 
-
-var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
+var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", [
   "attribute vec3 aVertexPosition;",
   "attribute vec2 aTextureCoord;",
   "uniform mat4 uMVMatrix;",
@@ -17,9 +17,9 @@ var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", text([
   "  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);",
   "  vTextureCoord = aTextureCoord;",
   "}"
-]));
+].join("\n"));
 
-var fragmentShaderScriptOld = Script.createFromSource("x-shader/x-fragment", text([
+var fragmentShaderScriptOld = Script.createFromSource("x-shader/x-fragment", [
   "precision highp float;",
   "varying highp vec2 vTextureCoord;",
   "uniform sampler2D YTexture;",
@@ -41,9 +41,9 @@ var fragmentShaderScriptOld = Script.createFromSource("x-shader/x-fragment", tex
   "    1",
   "  );",
   "}"
-]));
+].join("\n"));
 
-var fragmentShaderScriptSimple = Script.createFromSource("x-shader/x-fragment", text([
+var fragmentShaderScriptSimple = Script.createFromSource("x-shader/x-fragment", [
  "precision highp float;",
  "varying highp vec2 vTextureCoord;",
  "uniform sampler2D YTexture;",
@@ -53,9 +53,9 @@ var fragmentShaderScriptSimple = Script.createFromSource("x-shader/x-fragment", 
  "void main(void) {",
  "  gl_FragColor = texture2D(YTexture, vTextureCoord);",
  "}"
- ]));
+ ].join("\n"));
 
-var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", text([
+var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", [
   "precision highp float;",
   "varying highp vec2 vTextureCoord;",
   "uniform sampler2D YTexture;",
@@ -72,7 +72,7 @@ var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", text([
   "void main(void) {",
   " gl_FragColor = vec4( texture2D(YTexture,  vTextureCoord).x, texture2D(UTexture, vTextureCoord).x, texture2D(VTexture, vTextureCoord).x, 1) * YUV2RGB;",
   "}"
-]));
+].join("\n"));
 
 
 function YUVWebGLCanvas(canvas, size) {

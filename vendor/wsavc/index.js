@@ -2,6 +2,7 @@
 
 var Avc            = require('../broadway/Decoder');
 var YUVWebGLCanvas = require('../canvas/YUVWebGLCanvas');
+var Size           = require('../utils/Size');
 
 
 function WSAvcPlayer(canvas, canvastype, nals, delay) {

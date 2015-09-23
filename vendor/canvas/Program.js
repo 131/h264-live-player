@@ -1,4 +1,6 @@
 "use strict";
+var assert = require('../utils/assert');
+
 
 function Program(gl) {
   this.gl = gl;
