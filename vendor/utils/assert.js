@@ -8,3 +8,5 @@ function assert(condition, message) {
   }
 }
 
+
+module.exports = assert;
