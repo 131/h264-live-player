@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
   grunt.config('browserify', {
     options : {
-//      exclude       : ['winston'],
+      exclude       : ['lapack'],
 
       browserifyOptions : {
         browserField  : false,

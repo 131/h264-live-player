@@ -45,7 +45,6 @@ wss.on('connection', function(socket){
         return;
 
       socket.buzy = true;
-      socket.buzy = false;
       socket.send(Buffer.concat([separator, data]), { binary: true}, function ack(error) {
         socket.buzy = false;
 
