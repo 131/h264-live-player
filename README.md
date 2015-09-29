@@ -19,8 +19,10 @@ NAL unit (h264 frames) are split on the server side, so the client side is very 
 npm install
 grunt pack
 
-# edit server.js to your needs, check server-tcp.js for relaying a rpi video
-node .
+node server-rpi.js    # run on a rpi for a webcam demo
+node server-static.js # for sample video (static) file delivery
+node server-tcp.js    # for a remote tcp (rpi video feed) sample
+
 # browse to http://127.0.0.1:8080/ for a demo player
 
 ```

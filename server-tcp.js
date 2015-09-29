@@ -1,70 +1,26 @@
-var express = require('express');
-var app     = express();
-var fs      = require('fs');
-var net     = require('net');
-var cp      = require('child_process');
+"use strict";
 
+var http               = require('http');
+var express            = require('express');
+var RemoteTCPFeedRelay = require('lib/remotetcpfeed');
 
-var fileSizeSync = require('nyks/fs/fileSizeSync');
-var Splitter     = require('stream-split');
+/**
+* on the remote rpi run
+* raspivid -t 0 -o - -w 1280 -h 720 -fps 25 | nc -k -l 5001
+* to create a raw tcp h264 streamer
+*/
 
+  //public website
+app.use(express.static(__dirname + '/public'));
 
+var server  = http.createServer(app);
 
-var ip = "172.19.21.140", port = 5001, width = 960, height = 540;
-
-
-
-var server = require('http').createServer(app);
-
-
-
-var WebSocketServer = require('ws').Server
-var wss = new WebSocketServer({server: server});
-
-var sent = 0;
-
-wss.on('connection', function(socket){
-  socket.send(JSON.stringify({action : "init", width: width, height : height}));
-
-
-  var readStream = net.connect(port, ip, function(){
-    console.log("remote stream ready");
-  });
-
-
-  var separator = new Buffer([0,0,0,1]);
-  readStream = readStream.pipe(new Splitter(separator));
-
-
-
-  readStream.on('data', function(data) {
-      sent ++;
-
-    wss.clients.forEach(function(socket) {
-      if(socket.buzy)
-        return;
-
-      socket.buzy = true;
-      socket.send(Buffer.concat([separator, data]), { binary: true}, function ack(error) {
-        socket.buzy = false;
-
-        console.log("DRAINED", sent);
-        // if error is not defined, the send has been completed, 
-        // otherwise the error object will indicate what failed. 
-      });
-    });
-
-  });
-
-  console.log('New guy');
-
-
-  socket.on('close', function() {
-    console.log('stopping client interval');
-
-  });
+var feed    = new RemoteTCPFeedRelay(server, {
+  feed_ip   : "192.168.1.22",
+  feed_port : 5001,
 });
 
 
-app.use(express.static(__dirname + '/public'));
-server.listen(8080, "0.0.0.0");
+server.listen(8080);
+
+
