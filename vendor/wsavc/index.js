@@ -3,28 +3,38 @@
 var Avc            = require('../broadway/Decoder');
 var YUVWebGLCanvas = require('../canvas/YUVWebGLCanvas');
 var Size           = require('../utils/Size');
+var Class          = require('uclass');
 
 
-function WSAvcPlayer(canvas, canvastype, nals, delay) {
-  this.canvas = canvas;
-  this.nals = nals;
-  this.delay = delay;
-  // AVC codec initialization
-  this.avc = new Avc();
-  if(false) this.avc.configure({
-    filter: "original",
-    filterHorLuma: "optimized",
-    filterVerLumaEdge: "optimized",
-    getBoundaryStrengthsA: "optimized"
-  });
 
-  //WebSocket variable
-  this.ws;
-  this.pktnum = 0;
-  this.rcvtime;
-  this.prevframe;
-  
-  function onPictureDecodedWebGL(buffer, width, height) {
+var WSAvcPlayer = new Class({
+  Binds : ['onPictureDecodedWebGL', 'onPictureDecodedCanvas'],
+
+  initialize : function(canvas, canvastype) {
+
+    this.canvas     = canvas;
+    this.canvastype = canvastype;
+
+    // AVC codec initialization
+    this.avc = new Avc();
+    if(false) this.avc.configure({
+      filter: "original",
+      filterHorLuma: "optimized",
+      filterVerLumaEdge: "optimized",
+      getBoundaryStrengthsA: "optimized"
+    });
+
+    //WebSocket variable
+    this.ws;
+    this.pktnum = 0;
+    this.rcvtime;
+    this.prevframe;
+
+  },
+
+
+
+  onPictureDecodedWebGL : function (buffer, width, height) {
     if (!buffer) {
       return;
     }
@@ -36,11 +46,11 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
     this.webGLCanvas.VTexture.fill(buffer.subarray(lumaSize + chromaSize, lumaSize + 2 * chromaSize));
     this.webGLCanvas.drawScene();
     
-    var date = new Date();
+    //var date = new Date();
     //console.log("WSAvcPlayer: Decode time: " + (date.getTime() - this.rcvtime) + " ms");
-  }
-  
-  function onPictureDecodedCanvas(buffer, width, height) {
+  },
+
+  onPictureDecodedCanvas : function (buffer, width, height) {
     if (!buffer) {
       return;
     }
@@ -72,9 +82,10 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
     
     var date = new Date();
     //console.log("WSAvcPlayer: Decode time: " + (date.getTime() - this.rcvtime) + " ms");
-  }
+  },
 
-  this.decode = function(data) {
+
+  decode : function(data) {
     var naltype = "invalid frame";
     if (data.length > 4) {
       if (data[4] == 0x65) {
@@ -93,9 +104,9 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
     console.log("WSAvcPlayer: Passed " + naltype + " to decoder");
     /* Decode Pictures */
     this.avc.decode(data);
-  };
-  
-  this.connect = function(url) {		
+  },
+
+  connect : function(url) {
     // Websocket initialization
     if (this.ws != undefined) {
       this.ws.close();
@@ -122,20 +133,21 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
       // websocket is closed.
       console.log("WSAvcPlayer: Connection closed")
     };
-  };
+  },
 
-  this.initCanvas = function(width, height){
-    if (canvastype == "webgl") {
+
+  initCanvas : function(width, height) {
+    if (this.canvastype == "webgl") {
       this.webGLCanvas = new YUVWebGLCanvas(this.canvas, new Size(width, height));
-      this.avc.onPictureDecoded = onPictureDecodedWebGL.bind(this);
-    } else if (canvastype == "canvas") {
-      this.avc.onPictureDecoded = onPictureDecodedCanvas.bind(this);
+      this.avc.onPictureDecoded = this.onPictureDecodedWebGL;
+    } else if (this.canvastype == "canvas") {
+      this.avc.onPictureDecoded = this.onPictureDecodedCanvas;
       this.canvasCtx = this.canvas.getContext("2d");
       this.canvasBuffer = this.canvasCtx.createImageData(width, height);
     }
-  };
+  },
 
-  this.cmd = function(cmd){
+  cmd : function(cmd){
     console.log("Incoming request", cmd);
 
     if(cmd.action == "init") {
@@ -143,33 +155,24 @@ function WSAvcPlayer(canvas, canvastype, nals, delay) {
       this.canvas.width  = cmd.width;
       this.canvas.height = cmd.height;
     }
-  };
-  
-  this.disconnect = function() {
+  },
+
+  disconnect : function() {
     this.ws.close();
-  };
-  
-  this.playStream = function() {
-    var message = "REQUESTSTREAM " + this.nals + "NAL " + this.delay + "MS";
+  },
+
+  playStream : function() {
+    var message = "REQUESTSTREAM ";
     this.ws.send(message);
     console.log("WSAvcPlayer: Sent " + message);
-  };
-  
-  this.stopStream = function() {
+  },
+
+
+  stopStream : function() {
     this.ws.send("STOPSTREAM");
     console.log("WSAvcPlayer: Sent STOPSTREAM");
-  }
-  
-  this.playNAL = function() {
-    var message = "REQUEST " + this.nals + "NAL";
-    this.ws.send(message);
-    console.log("WSAvcPlayer: Sent " + message);
-  };
-  
-  this.flush = function() {
-    console.log("Flush: " + this.prevframe.length);
-    this.decode(this.prevframe);
-  };
-}
+  },
+});
+
 
 module.exports = WSAvcPlayer;
