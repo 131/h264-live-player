@@ -2,7 +2,8 @@
 
 var http               = require('http');
 var express            = require('express');
-var RemoteTCPFeedRelay = require('lib/remotetcpfeed');
+var RemoteTCPFeedRelay = require('./lib/remotetcpfeed');
+var app                = express();
 
 /**
 * on the remote rpi run
@@ -16,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 var server  = http.createServer(app);
 
 var feed    = new RemoteTCPFeedRelay(server, {
-  feed_ip   : "192.168.1.22",
+  feed_ip   : "172.19.20.165",
   feed_port : 5001,
 });
 
