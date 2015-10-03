@@ -15,7 +15,8 @@
     "stream-split": "^0.1.0",
     "stream-throttle": "^0.1.3",
     "sylvester.js": "^0.1.1",
-    "ws": "^0.8.0"
+    "ws": "^0.8.0",
+    "uclass": "^2.0.6"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
