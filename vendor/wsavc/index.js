@@ -87,6 +87,7 @@ var WSAvcPlayer = new Class({
 
   decode : function(data) {
     var naltype = "invalid frame";
+    console.log(data[4]);
     if (data.length > 4) {
       if (data[4] == 0x65) {
         naltype = "I frame";

@@ -11,12 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^3.21.2",
-    "nyks": "^1.1.5",
+    "nyks": "^1.2.4",
     "stream-split": "^0.1.0",
     "stream-throttle": "^0.1.3",
     "sylvester.js": "^0.1.1",
-    "ws": "^0.8.0",
-    "uclass": "^2.0.6"
+    "uclass": "^2.0.6",
+    "ws": "^0.8.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
