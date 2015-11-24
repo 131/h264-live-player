@@ -3,7 +3,7 @@
 This is a very simple h264 video player (that can run on live stream) for your browser.
 You might use this with raspicam raw h264 stream.
 This is a player around [Broadway](https://github.com/mbebenita/Broadway) Decoder, with very simple API.
-NAL unit (h264 frames) are split on the server side, so the client side is very simple (and allow frame skipping easily)
+NAL unit (h264 frames) are split on the server side, transported using websocket, and sent to the decoded (with frame dropping, if necessary)
 
 
 # History
@@ -43,7 +43,7 @@ node server-tcp.js    # for a remote tcp (rpi video feed) sample
 
 
 # Keywords / shout box
-raspberry, mp4box, h264, nal, raspivid, mse, media source extension, iso, raspicam, bitrate, realtime, video, mp4, ffmpeg, "Let's have a beer and talk in Paris"
+raspberry, mp4box, h264, nal, raspivid, mse, media source extension, iso, raspicam, bitrate, realtime, video, mp4, ffmpeg, websocket, ws, socket.io "Let's have a beer and talk in Paris"
 
 
 
