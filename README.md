@@ -16,6 +16,8 @@ NAL unit (h264 frames) are split on the server side, transported using websocket
 
 # Installation/demo
 ```
+git clone git@github.com:131/h264-live-player.git player
+cd player
 npm install
 grunt pack
 
