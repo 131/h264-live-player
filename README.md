@@ -35,6 +35,7 @@ node server-tcp.js    # for a remote tcp (rpi video feed) sample
 
 
 # TODO
+* Try to switch ws to uws (for performance & stability)
 * Try to revert broadway mp4 un-boxing code into a live h264 mp4-boxing design, so i can use MSE and hardware acceleration (on desktop)...
 
 
