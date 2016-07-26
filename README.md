@@ -32,6 +32,7 @@ node server-tcp.js    # for a remote tcp (rpi video feed) sample
 # Recommandation
 * Broadway h264 Decoder can only work with baseline profile
 * Browserify FTW
+* Once you understood how to integrate the server-side, feel free to us [h264-live-player](https://www.npmjs.com/package/h264) npm package  in your client side app (see vendor/)
 
 
 # TODO
