@@ -1,35 +1,38 @@
 "use strict";
 
-var inherit = require('../utils/inherit');
+var Class = require('uclass');
 
-var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", [
-  "attribute vec3 aVertexPosition;",
-  "attribute vec2 aTextureCoord;",
-  "uniform mat4 uMVMatrix;",
-  "uniform mat4 uPMatrix;",
-  "varying highp vec2 vTextureCoord;",
-  "void main(void) {",
-  "  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);",
-  "  vTextureCoord = aTextureCoord;",
-  "}"
-].join("\n"));
+
+var vertexShaderScript = Script.createFromSource("x-shader/x-vertex", `
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+  varying highp vec2 vTextureCoord;
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+  }
+`);
 
 var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", [
-  "precision highp float;",
-  "varying highp vec2 vTextureCoord;",
-  "uniform sampler2D FTexture;",
-  
-  "void main(void) {",
-  " gl_FragColor = texture2D(FTexture,  vTextureCoord);",
-  "}"
-].join("\n"));
+  precision highp float;
+  varying highp vec2 vTextureCoord;
+  uniform sampler2D FTexture;
+
+  void main(void) {
+   gl_FragColor = texture2D(FTexture,  vTextureCoord);
+  }
+`);
 
 
-function FilterWebGLCanvas(canvas, size, useFrameBuffer) {
-  WebGLCanvas.call(this, canvas, size, useFrameBuffer);
-} 
+var FilterWebGLCanvas = new Class({
+  Extends  : WebGLCanvas,
 
-FilterWebGLCanvas.prototype = inherit(WebGLCanvas, {
+  initialize : function(canvas, size, useFrameBuffer) {
+    FilterWebGLCanvas.parent.initialize.call(this, canvas, size, useFrameBuffer);
+  },
+
   onInitShaders: function() {
     this.program = new Program(this.gl);
     this.program.attach(new Shader(this.gl, vertexShaderScript));
@@ -57,6 +60,7 @@ FilterWebGLCanvas.prototype = inherit(WebGLCanvas, {
     return "FilterWebGLCanvas Size: " + this.size;
   }
 });
+
 
 
 module.exports = FilterWebGLCanvas;
