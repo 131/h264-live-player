@@ -55,6 +55,7 @@ var WSAvcPlayer = new Class({
   },
 
   connect : function(url) {
+
     // Websocket initialization
     if (this.ws != undefined) {
       this.ws.close();
@@ -62,10 +63,12 @@ var WSAvcPlayer = new Class({
     }
     this.ws = new WebSocket(url);
     this.ws.binaryType = "arraybuffer";
-    this.ws.onopen = function() {
+
+    this.ws.onopen = () => {
       console.log("WSAvcPlayer: Connected to " + url);
-    }.bind(this);
-    this.ws.onmessage = function(evt) {
+    };
+
+    this.ws.onmessage = (evt) => {
       if(typeof evt.data == "string")
         return this.cmd(JSON.parse(evt.data));
 
@@ -76,11 +79,12 @@ var WSAvcPlayer = new Class({
       this.rcvtime = date.getTime();
       this.decode(data);
       this.prevframe = data;
-    }.bind(this);
-    this.ws.onclose = function()	{ 
-      // websocket is closed.
+    };
+
+    this.ws.onclose = () => { 
       console.log("WSAvcPlayer: Connection closed")
     };
+
   },
 
   initCanvas : function(width, height) {
