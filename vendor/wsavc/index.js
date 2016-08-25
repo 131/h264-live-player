@@ -5,9 +5,11 @@ var YUVWebGLCanvas = require('../canvas/YUVWebGLCanvas');
 var YUVCanvas      = require('../canvas/YUVCanvas');
 var Size           = require('../utils/Size');
 var Class          = require('uclass');
-
+var Events         = require('uclass/events');
 
 var WSAvcPlayer = new Class({
+  Implements : [Events],
+
 
   initialize : function(canvas, canvastype) {
 
@@ -34,7 +36,7 @@ var WSAvcPlayer = new Class({
 
   decode : function(data) {
     var naltype = "invalid frame";
-    console.log(data[4]);
+
     if (data.length > 4) {
       if (data[4] == 0x65) {
         naltype = "I frame";
@@ -49,8 +51,7 @@ var WSAvcPlayer = new Class({
         naltype = "PPS";
       }
     }
-    console.log("WSAvcPlayer: Passed " + naltype + " to decoder");
-    /* Decode Pictures */
+    //console.log("WSAvcPlayer: Passed " + naltype + " to decoder");
     this.avc.decode(data);
   },
 
@@ -74,7 +75,7 @@ var WSAvcPlayer = new Class({
 
       this.pktnum++;
       var data = new Uint8Array(evt.data);
-      console.log("WSAvcPlayer: [Pkt " + this.pktnum + " (" + evt.data.byteLength + " bytes)]");
+      //console.log("WSAvcPlayer: [Pkt " + this.pktnum + " (" + evt.data.byteLength + " bytes)]");
       var date = new Date();
       this.rcvtime = date.getTime();
       this.decode(data);
@@ -96,6 +97,8 @@ var WSAvcPlayer = new Class({
       canvas = new YUVCanvas(this.canvas, new Size(width, height));
 
     this.avc.onPictureDecoded = canvas.decode;
+
+    this.emit("canvasReady", canvas, width, height);
   },
 
   cmd : function(cmd){
