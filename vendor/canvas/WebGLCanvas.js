@@ -247,13 +247,11 @@ var WebGLCanvas = new Class({
   drawScene: function() {
     this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
   },
+
   readPixels: function(buffer) {
     var gl = this.gl;
     gl.readPixels(0, 0, this.size.w, this.size.h, gl.RGBA, gl.UNSIGNED_BYTE, buffer);
   },
-
-
-
 
 
 });

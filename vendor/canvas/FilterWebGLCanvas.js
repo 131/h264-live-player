@@ -44,18 +44,22 @@ var FilterWebGLCanvas = new Class({
     this.textureCoordAttribute = this.program.getAttributeLocation("aTextureCoord");
     this.gl.enableVertexAttribArray(this.textureCoordAttribute);
   },
+
   onInitTextures: function () {
     console.log("creatingTextures: size: " + this.size);
     this.FTexture = new Texture(this.gl, this.size, this.gl.RGBA);
   },
+
   onInitSceneTextures: function () {
     this.FTexture.bind(0, this.program, "FTexture");
   },
+
   process: function(buffer, output) {
     this.FTexture.fill(buffer);
     this.drawScene();
     this.readPixels(output);
   },
+
   toString: function() {
     return "FilterWebGLCanvas Size: " + this.size;
   }
