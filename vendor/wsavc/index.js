@@ -6,7 +6,6 @@ var Size           = require('../utils/Size');
 var Class          = require('uclass');
 
 
-
 var WSAvcPlayer = new Class({
   Binds : ['onPictureDecodedWebGL', 'onPictureDecodedCanvas'],
 
@@ -32,23 +31,6 @@ var WSAvcPlayer = new Class({
 
   },
 
-
-
-  onPictureDecodedWebGL : function (buffer, width, height) {
-    if (!buffer) {
-      return;
-    }
-    var lumaSize = width * height;
-    var chromaSize = lumaSize >> 2;
-
-    this.webGLCanvas.YTexture.fill(buffer.subarray(0, lumaSize));
-    this.webGLCanvas.UTexture.fill(buffer.subarray(lumaSize, lumaSize + chromaSize));
-    this.webGLCanvas.VTexture.fill(buffer.subarray(lumaSize + chromaSize, lumaSize + 2 * chromaSize));
-    this.webGLCanvas.drawScene();
-    
-    //var date = new Date();
-    //console.log("WSAvcPlayer: Decode time: " + (date.getTime() - this.rcvtime) + " ms");
-  },
 
   onPictureDecodedCanvas : function (buffer, width, height) {
     if (!buffer) {
@@ -139,8 +121,8 @@ var WSAvcPlayer = new Class({
 
   initCanvas : function(width, height) {
     if (this.canvastype == "webgl") {
-      this.webGLCanvas = new YUVWebGLCanvas(this.canvas, new Size(width, height));
-      this.avc.onPictureDecoded = this.onPictureDecodedWebGL;
+      var webGLCanvas = new YUVWebGLCanvas(this.canvas, new Size(width, height));
+      this.avc.onPictureDecoded = webGLCanvas.decode;
     } else if (this.canvastype == "canvas") {
       this.avc.onPictureDecoded = this.onPictureDecodedCanvas;
       this.canvasCtx = this.canvas.getContext("2d");

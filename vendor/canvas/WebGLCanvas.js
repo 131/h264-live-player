@@ -232,6 +232,8 @@ WebGLCanvas.prototype = {
   readPixels: function(buffer) {
     var gl = this.gl;
     gl.readPixels(0, 0, this.size.w, this.size.h, gl.RGBA, gl.UNSIGNED_BYTE, buffer);
-  }
+  },
+
+
 };
 module.exports = WebGLCanvas;

@@ -75,8 +75,11 @@ var fragmentShaderScript = Script.createFromSource("x-shader/x-fragment", [
 ].join("\n"));
 
 
+
+
 function YUVWebGLCanvas(canvas, size) {
   WebGLCanvas.call(this, canvas, size);
+  this.decode = this.decode.bind(this);
 } 
 
 YUVWebGLCanvas.prototype = inherit(WebGLCanvas, {
@@ -107,6 +110,20 @@ YUVWebGLCanvas.prototype = inherit(WebGLCanvas, {
     this.UTexture.fill(u);
     this.VTexture.fill(v);
   },
+
+  decode: function(buffer, width, height) {
+    if (!buffer)
+      return;
+
+    var lumaSize = width * height;
+    var chromaSize = lumaSize >> 2;
+
+    this.YTexture.fill(buffer.subarray(0, lumaSize));
+    this.UTexture.fill(buffer.subarray(lumaSize, lumaSize + chromaSize));
+    this.VTexture.fill(buffer.subarray(lumaSize + chromaSize, lumaSize + 2 * chromaSize));
+    this.drawScene();
+  },
+
   toString: function() {
     return "YUVCanvas Size: " + this.size;
   }
