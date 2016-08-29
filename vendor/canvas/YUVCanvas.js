@@ -5,9 +5,10 @@ var YUVCanvas = new Class({
 
   Binds : ['decode'],
 
-  initialize : function(canvas) {
+  initialize : function(canvas, size) {
+    this.canvas = canvas;
     this.canvasCtx = this.canvas.getContext("2d");
-    this.canvasBuffer = this.canvasCtx.createImageData(width, height);
+    this.canvasBuffer = this.canvasCtx.createImageData(size.w, size.h);
   },
 
   decode : function (buffer, width, height) {
@@ -45,3 +46,6 @@ var YUVCanvas = new Class({
   },
 
 });
+
+
+module.exports = YUVCanvas;

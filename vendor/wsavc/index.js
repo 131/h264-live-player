@@ -89,16 +89,13 @@ var WSAvcPlayer = new Class({
   },
 
   initCanvas : function(width, height) {
-    var canvas;
+    var canvasFactory = this.canvastype == "webgl" || this.canvastype == "YUVWebGLCanvas"
+                        ? YUVWebGLCanvas
+                        : YUVCanvas;
 
-    if (this.canvastype == "webgl")
-      canvas = new YUVWebGLCanvas(this.canvas, new Size(width, height));
-    else if (this.canvastype == "canvas")
-      canvas = new YUVCanvas(this.canvas, new Size(width, height));
-
+    var canvas = new canvasFactory(this.canvas, new Size(width, height));
     this.avc.onPictureDecoded = canvas.decode;
-
-    this.emit("canvasReady", canvas, width, height);
+    this.emit("canvasReady", width, height);
   },
 
   cmd : function(cmd){
