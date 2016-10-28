@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^3.21.2",
     "nyks": "^1.2.4",
-    "stream-split": "^0.1.0",
+    "stream-split": "^1.1.0",
     "stream-throttle": "^0.1.3",
     "sylvester.js": "^0.1.1",
     "uclass": "^2.0.6",
