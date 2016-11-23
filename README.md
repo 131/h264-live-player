@@ -6,10 +6,6 @@ This is a player around [Broadway](https://github.com/mbebenita/Broadway) Decode
 NAL unit (h264 frames) are split on the server side, transported using websocket, and sent to the decoded (with frame dropping, if necessary)
 
 
-# Windows
-You can use any directshow device (camera/screen recorder) and have a nice real time feedback.
-
-
 
 # History
 * I was targetting a real-time  camera video feedback (no audio/surveillance cam) in the browser
@@ -24,25 +20,22 @@ You can use any directshow device (camera/screen recorder) and have a nice real 
 git clone git@github.com/131/h264-live-player.git player
 cd player
 npm install
-grunt pack
 
 node server-rpi.js    # run on a rpi for a webcam demo
 node server-static.js # for sample video (static) file delivery
 node server-tcp.js    # for a remote tcp (rpi video feed) sample
+node server-ffmpeg    # usefull on win32 to debug the live feed (use ffmpeg & your directshow device / webcam) 
 
 # browse to http://127.0.0.1:8080/ for a demo player
 
 ```
 
 # Recommandation
-* Broadway h264 Decoder can only work with baseline profile
+* Broadway h264 Decoder can only work with **h264 baseline profile**
+* [**Use a SANE birate**](https://www.dr-lex.be/info-stuff/videocalc.html)
 * Browserify FTW
 * Once you understood how to integrate the server-side, feel free to use [h264-live-player](https://www.npmjs.com/package/h264-live-player) npm package  in your client side app (see vendor/)
-
-
-# TODO
-* Switch to uws & fallback to ws (for performance)
-* Try to revert broadway mp4 un-boxing code into a live h264 mp4-boxing design, so i can use MSE and hardware acceleration (on desktop)...
+* Use [uws](https://github.com/uWebSockets/uWebSockets) (instead of ws) as websocket server
 
 
 # Credits
