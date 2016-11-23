@@ -1,5 +1,6 @@
 {
-  "name": "stream",
+  "name": "h264-live-stream-demo-server",
+  "private":true,
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
