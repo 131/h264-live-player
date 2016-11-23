@@ -6,6 +6,11 @@ This is a player around [Broadway](https://github.com/mbebenita/Broadway) Decode
 NAL unit (h264 frames) are split on the server side, transported using websocket, and sent to the decoded (with frame dropping, if necessary)
 
 
+# Windows
+You can use any directshow device (camera/screen recorder) and have a nice real time feedback.
+
+
+
 # History
 * I was targetting a real-time  camera video feedback (no audio/surveillance cam) in the browser
 * There is no solution for "real time"  mp4 video creation / playback (ffmpeg, mp4box.js, mp4parser - _boxing_ _takes_ _time_)
