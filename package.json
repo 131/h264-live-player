@@ -1,9 +1,11 @@
 {
-  "name": "stream",
+  "name": "h264-live-stream-demo-server",
+  "private":true,
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
+    "install": "cd vendor && npm install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
@@ -11,17 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^3.21.2",
-    "nyks": "^1.2.4",
-    "stream-split": "^0.1.0",
+    "nyks": "^3.9.1",
+    "stream-split": "^1.1.0",
     "stream-throttle": "^0.1.3",
-    "sylvester.js": "^0.1.1",
-    "uclass": "^2.0.6",
     "ws": "^0.8.0"
   },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^3.8.0",
-    "grunt-contrib-uglify": "^0.9.1",
-    "grunt-contrib-watch": "^0.6.1"
-  }
+  "devDependencies": {}
 }

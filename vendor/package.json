@@ -1,8 +1,9 @@
 {
   "name": "h264-live-player",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "main": "wsavc/index.js",
   "scripts": {
+    "dist": "browserify  --bare --standalone WSAvcPlayer --plugin discify wsavc/ > dist/http-live-player.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +24,11 @@
   },
   "description": "This is a very simple h264 video player (that can run on live stream) for your browser.\r You might use this with raspicam raw h264 stream.\r This is a player around [Broadway](https://github.com/mbebenita/Broadway) Decoder, with very simple API.\r NAL unit (h264 frames) are split on the server side, so the client side is very simple (and allow frame skipping easily)",
   "dependencies": {
+    "debug": "^2.3.2",
     "sylvester.js": "^0.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "discify": "^1.4.2"
   }
 }
