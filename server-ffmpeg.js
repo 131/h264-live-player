@@ -6,23 +6,23 @@
 */
 
 
-var http    = require('http');
-var express = require('express');
+const http    = require('http');
+const express = require('express');
 
 
-var WebStreamerServer = require('./lib/ffmpeg');
+const WebStreamerServer = require('./lib/ffmpeg');
 
-var app  = express();
+const app  = express();
 
   //public website
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/vendor/dist'));
 
 
-var server  = http.createServer(app);
-var silence = new WebStreamerServer(server, {
-    width : 640,
-    height: 480,
+const server  = http.createServer(app);
+const silence = new WebStreamerServer(server, {
+  width : 640,
+  height: 480,
 });
 
 server.listen(8080);

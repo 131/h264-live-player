@@ -1,9 +1,9 @@
 "use strict";
 
-var http               = require('http');
-var express            = require('express');
-var RemoteTCPFeedRelay = require('./lib/remotetcpfeed');
-var app                = express();
+const http               = require('http');
+const express            = require('express');
+const RemoteTCPFeedRelay = require('./lib/remotetcpfeed');
+const app                = express();
 
 /**
 * on the remote rpi run
@@ -15,9 +15,9 @@ var app                = express();
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/vendor/dist'));
 
-var server  = http.createServer(app);
+const server  = http.createServer(app);
 
-var feed    = new RemoteTCPFeedRelay(server, {
+const feed    = new RemoteTCPFeedRelay(server, {
   feed_ip   : "172.19.20.165",
   feed_port : 5001,
 });

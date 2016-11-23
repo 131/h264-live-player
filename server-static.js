@@ -1,9 +1,10 @@
 "use strict";
 
-var http               = require('http');
-var express            = require('express');
-var RemoteTCPFeedRelay = require('./lib/static');
-var app                = express();
+const http               = require('http');
+const express            = require('express');
+
+const RemoteTCPFeedRelay = require('./lib/static');
+const app                = express();
 
 
 
@@ -11,7 +12,7 @@ var app                = express();
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/vendor/dist'));
 
-var server  = http.createServer(app);
+const server  = http.createServer(app);
 
 var source = {
   width     : 480,
@@ -33,7 +34,7 @@ source = {
 
 
 
-var feed    = new RemoteTCPFeedRelay(server, source);
+const feed    = new RemoteTCPFeedRelay(server, source);
 
 
 server.listen(8080);

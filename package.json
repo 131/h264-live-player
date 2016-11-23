@@ -1,6 +1,6 @@
 {
   "name": "h264-live-stream-demo-server",
-  "private":true,
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^3.21.2",
-    "nyks": "^3.9.1",
+    "mout": "^1.0.0",
     "stream-split": "^1.1.0",
     "stream-throttle": "^0.1.3",
     "ws": "^0.8.0"
