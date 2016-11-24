@@ -5,6 +5,8 @@ You might use this with raspicam raw h264 stream.
 This is a player around [Broadway](https://github.com/mbebenita/Broadway) Decoder, with very simple API.
 NAL unit (h264 frames) are split on the server side, transported using websocket, and sent to the decoded (with frame dropping, if necessary)
 
+[![Version](https://img.shields.io/npm/v/h264-live-player.svg)](https://www.npmjs.com/package/h264-live-player)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 
 # History
