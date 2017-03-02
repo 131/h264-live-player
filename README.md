@@ -25,6 +25,7 @@ npm install
 
 node server-rpi.js    # run on a rpi for a webcam demo
 node server-static.js # for sample video (static) file delivery
+node server-frames.js # for sample frames (static) file delivery
 node server-tcp.js    # for a remote tcp (rpi video feed) sample
 node server-ffmpeg    # usefull on win32 to debug the live feed (use ffmpeg & your directshow device / webcam) 
 

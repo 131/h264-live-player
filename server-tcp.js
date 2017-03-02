@@ -17,10 +17,15 @@ app.use(express.static(__dirname + '/vendor/dist'));
 
 const server  = http.createServer(app);
 
-const feed    = new RemoteTCPFeedRelay(server, {
-  feed_ip   : "172.19.20.165",
-  feed_port : 5001,
-});
+var remote = {
+  feed_ip   : "172.19.21.58",
+  feed_port : process.argv[2] || 5001,
+};
+
+
+console.log("Remote is ", remote);
+
+const feed    = new RemoteTCPFeedRelay(server, remote);
 
 
 server.listen(8080);
