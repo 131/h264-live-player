@@ -19,8 +19,8 @@ NAL unit (h264 frames) are split on the server side, transported using websocket
 
 # Installation/demo
 ```
-git clone git@github.com:131/h264-live-player.git player
-cd player
+git clone https://github.com/131/h264-live-player.git
+cd h264-live-player/
 npm install
 
 node server-rpi.js    # run on a rpi for a webcam demo
