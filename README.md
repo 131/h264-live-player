@@ -10,8 +10,8 @@ NAL unit (h264 frames) are split on the server side, transported using websocket
 
 
 # History
-* I was targetting a real-time  camera video feedback (no audio/surveillance cam) in the browser
-* There is no solution for "real time"  mp4 video creation / playback (ffmpeg, mp4box.js, mp4parser - _boxing_ _takes_ _time_)
+* I was targetting a real-time camera video feedback (no audio/surveillance cam) in the browser
+* There is no solution for "real time" mp4 video creation / playback (ffmpeg, mp4box.js, mp4parser - _boxing_ _takes_ _time_)
 * Media Source Extension is a dead end (mp4 boxing is far too hard to re-create on the client side)
 * [Broadway](https://github.com/mbebenita/Broadway) provide the crazy emscripten/asm build of a h264 encoder accelerated by webGL canvas
 * Here is all the glue we need, enjoy ;-)
@@ -32,11 +32,11 @@ node server-ffmpeg    # usefull on win32 to debug the live feed (use ffmpeg & yo
 
 ```
 
-# Recommandation
+# Recommendations
 * Broadway h264 Decoder can only work with **h264 baseline profile**
 * [**Use a SANE birate**](https://www.dr-lex.be/info-stuff/videocalc.html)
 * Browserify FTW
-* Once you understood how to integrate the server-side, feel free to use [h264-live-player](https://www.npmjs.com/package/h264-live-player) npm package  in your client side app (see vendor/)
+* Once you understand how to integrate the server-side, feel free to use [h264-live-player](https://www.npmjs.com/package/h264-live-player) npm package in your client side app (see vendor/)
 * Use [uws](https://github.com/uWebSockets/uWebSockets) (instead of ws) as websocket server
 
 
@@ -48,6 +48,3 @@ node server-ffmpeg    # usefull on win32 to debug the live feed (use ffmpeg & yo
 
 # Keywords / shout box
 raspberry, mp4box, h264, nal, raspivid, mse, media source extension, iso, raspicam, bitrate, realtime, video, mp4, ffmpeg, websocket, ws, socket.io "Let's have a beer and talk in Paris"
-
-
-
