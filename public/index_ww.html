@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>h264-live-player web client demo</title>
+  </head>
+  <body>
+
+    <button type="button" onclick="wsavc.playStream()">Start Video</button>
+    <button type="button" onclick="wsavc.stopStream()">Stop Video</button>
+    <button type="button" onclick="wsavc.disconnect()">Disconnect</button>
+    <br/>
+
+  <!-- provide WSAvcPlayer -->
+    <script type="text/javascript">
+
+var canvas = document.createElement("canvas");
+document.body.appendChild(canvas);
+
+// Create h264 player
+var uri = "ws://" + document.location.host;
+const ww = new Worker('http-live-player-worker.js');
+const ofc = canvas.transferControlToOffscreen()
+ww.postMessage({
+  cmd:'init',
+  canvas: ofc
+}, [ofc]);
+ww.postMessage({
+  cmd:'connect',
+  url:uri
+});
+
+//expose instance for button callbacks
+window.wsavc = {
+  playStream(){
+    ww.postMessage({
+      cmd:'play'
+    })
+  },
+  stopStream(){
+    ww.postMessage({
+      cmd:'stop'
+    })
+  },
+  disconnect(){
+    ww.postMessage({
+      cmd:'disconnect'
+    })
+  }
+};
+
+    </script>
+  </body>
+</html>
