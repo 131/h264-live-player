@@ -16,7 +16,7 @@
     "mout": "^1.0.0",
     "stream-split": "^1.1.0",
     "stream-throttle": "^0.1.3",
-    "ws": "^0.8.0"
+    "ws": "^7.1.2"
   },
   "devDependencies": {}
 }
