@@ -13,7 +13,7 @@ NAL unit (h264 frames) are split on the server side, transported using websocket
 * I was targetting a real-time camera video feedback (no audio/surveillance cam) in the browser
 * There is no solution for "real time" mp4 video creation / playback (ffmpeg, mp4box.js, mp4parser - _boxing_ _takes_ _time_)
 * Media Source Extension is a dead end (mp4 boxing is far too hard to re-create on the client side)
-* [Broadway](https://github.com/mbebenita/Broadway) provide the crazy emscripten/asm build of a h264 encoder accelerated by webGL canvas
+* [Broadway](https://github.com/mbebenita/Broadway) provide the crazy emscripten/asm build of a h264 decoder accelerated by webGL canvas
 * Here is all the glue we need, enjoy ;-)
 
 
