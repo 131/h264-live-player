@@ -136,6 +136,11 @@ var WSAvcPlayer = new Class({
       this.canvas.height = cmd.height;
     }
   },
+  
+  sendMessage : function(message){
+    log("Incoming request", message);
+    this.ws.send(message);
+  },
 
   disconnect : function() {
     this.ws.close();
